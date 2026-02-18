@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recycling Centers - {{ company_name }}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <header>
+    <h1>{{ company_name }}</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/centers">Recycling Centers</a>
+    </nav>
+  </header>
+
+    <style>
+        body {
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            color: #fff;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #171515;
+        }
+        form {
+            max-width: 400px;
+            margin: 15px auto;
+            display: flex;
+            gap: 10px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border-radius: 6px;
+            border: none;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #c5228c;
+            border: none;
+            border-radius: 6px;
+            color: #fdfcfc;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .error-box {
+            max-width: 500px;
+            margin: 15px auto;
+            padding: 12px;
+            background: #410128;
+            color: white;
+            border-radius: 6px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .center-list {
+            max-width: 700px;
+            margin: 20px auto;
+            list-style: none;
+            padding: 0;
+        }
+        .center-card {
+            background: rgba(255,255,255,0.08);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid #c52281;
+        }
+        .center-card strong {
+            font-size: 1.1em;
+            color: #c106a5;
+        }
+        .location-coordinates {
+            font-size: 0.85em;
+            color: #0e0101;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Recycling Center Locator</h1>
+
+<form method="POST" action="/centers">
+    <input type="text" name="city" placeholder="Enter city name" required>
+    <button type="submit">Search</button>
+</form>
+
+{% if city %}
+    <h2>Results for "{{ city }}":</h2>
+{% endif %}
+
+{% if error %}
+<div class="error-box">
+    {{ error }}
+</div>
+{% endif %}
+
+{% if locations %}
+    <ul class="center-list">
+        {% for loc in locations %}
+        <li class="center-card">
+            <strong>{{ loc.name }}</strong><br>
+            {{ loc.address }}<br>
+            <div class="location-coordinates">
+                📍 Lat: {{ loc.lat }} | Lng: {{ loc.lng }}
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+{% elif city and not error %}
+    <p style="text-align:center; margin-top:20px; font-size:1.1em;">
+        No recycling centers found in "{{ city }}".
+    </p>
+{% endif %}
+
+</body>
+</html>

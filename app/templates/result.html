@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ company_name }} | Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>{{ company_name }}</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/centers">Recycling Centers</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2>Prediction Result</h2>
+        <div class="result-box">
+            <img src="{{ url_for('display_image', filename=filename) }}" alt="Uploaded Image">
+            <h3>Waste Type: {{ prediction }}</h3>
+            <p>Confidence: {{ confidence }}%</p>
+            <p>{{ info }}</p>
+        </div>
+
+        <a href="/" class="btn">Try Another Image</a>
+    </main>
+
+    <footer>
+        <p>© 2025 {{ company_name }} | Smart Waste Segregation</p>
+    </footer>
+</body>
+</html>
